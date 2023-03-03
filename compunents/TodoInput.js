@@ -2,31 +2,43 @@ import { StyleSheet,View,TextInput,Pressable,Text } from 'react-native';
 import { useState } from "react";
 import Todo from '../moduels/Todo';
 import { findAll, insert } from '../database/localdb';
+import {title} from '../moduels/Todo';
 
 
 const TodoInput = ({setInputList})=>{
     const [text, setText] = useState("");
     const[count,setCount]=useState(1);
- 
+   //const[todoCheck,setTodoCheck]=useState('');
+  
+
 
     const handleAdd = () => {
-      if(text===''){
-        alert('Empty Wish! Not Allowed')
-      } else{
-        const todo = new Todo(count,text,false)
+      /* if( text===""  ){
+        alert("empty or dupicated values")
+      } else{ */
+      
+      let todo = (new Todo(count,text,false));
+if(text==="" || todo.title===text   ){
+  console.log(text);
+  console.log(todo.title);
+  console.log(setInputList);
+
+
+  alert('Error')}
+  else{
+
         setCount((priv)=>priv+1);
        insert(todo)
-
-       .then (res=>{console.log('Inserted',res)})
+      .then (res=>{console.log(todo.title)})
        return findAll()
        .then(res => setInputList(res),
         setText(""))}
     
-      };
+  };
       const changeText = (text) => {
         setText(text);
         
-      };
+};
  return(
     <View style={styles.input}>
     <TextInput
